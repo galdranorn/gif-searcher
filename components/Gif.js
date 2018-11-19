@@ -6,15 +6,14 @@ var styles = {
 
 Gif = React.createClass({
 
-    getInitialState() {
-        return {
-            loading: false,
-            searchingText: '',
-            gif: {}
-        };
-    },
+  getInitialState() {
+      return {
+          loading: false,
+          searchingText: '',
+          gif: {}
+      }
+  },
 
-// function used later in link rendering
   getUrl: function() {
     return this.props.sourceUrl || GIPHY_LOADING_URL;
   },
@@ -25,8 +24,8 @@ Gif = React.createClass({
 
     return (
       <div style={styles}>
-        <a href={this.getUrl()} title='view this on giphy' target='new'>
-          <img id='gif' src={url} style={{width: '100%', maxWidth: '350px'}}/>
+        <a href={this.getUrl()} title={'view this on giphy'} target={'new'}>
+          <img id={'gif'} src={url} style={{width: '100%', maxWidth: '350px'}}/>
         </a>
       </div>
     );
