@@ -1,24 +1,5 @@
 Search = React.createClass({
 
-    render: function() {
-        var styles = {
-            fontSize: '1.5em',
-            width: '90%',
-            maxWidth: '350px'
-        };
-    
-        // input is not html but react class
-        <input type={'text'}
-                // if change, do some actions defined in handleChange
-                onChange={this.handleChange}
-                placeholder={'Write here what do you want to search'}
-                style={styles}
-                value={this.state.searchTerm}
-                // listener for finish pressing key
-                onKeyUp={this.handleKeyUp}
-                />
-        },
-
     getInitialState() {return {searchingText: ''}},
 
     handleChange: function(event) {
@@ -36,5 +17,25 @@ Search = React.createClass({
           // send data to parent
           this.props.onSearch(this.state.searchingText)
         }
-    }
+    },
+
+    render: function() {
+        var styles = {
+            fontSize: '1.5em',
+            width: '90%',
+            maxWidth: '350px'
+        };
+    
+        // input is not html but react class
+        return (
+            <input type={'text'}
+                // if change, do some actions defined in handleChange
+                onChange={this.handleChange}
+                placeholder={'Write here what do you want to search'}
+                style={styles}
+                value={this.state.searchTerm}
+                // listener for finish pressing key
+                onKeyUp={this.handleKeyUp}
+                />
+        )}
 });
