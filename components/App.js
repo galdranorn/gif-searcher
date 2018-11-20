@@ -4,6 +4,12 @@ var GIPHY_PUB_KEY = 'q1MLo0EO8pEkbEeimt8RaXsAHuttdlnt';
 
 App = React.createClass({
 
+    getInitialState: function() {
+        return {
+            loading: false, 
+            gif: {}, 
+            searchingText: ''};
+      },
     /* 
     1. as props we got text and function
     2. construct url for giphy API
@@ -48,9 +54,9 @@ App = React.createClass({
         }); 
         this.getGif(searchingText, function(gif) { // 3
             this.setState({  // 4
-            loading: false, // a
-            gif: gif, // b
-            searchingText: searchingText // c
+                loading: false, // a
+                gif: gif, // b
+                searchingText: searchingText // c
           });
         }.bind(this)); // 5
     },

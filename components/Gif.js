@@ -9,8 +9,8 @@ Gif = React.createClass({
   getInitialState() {
       return {
           loading: false,
-          searchingText: '',
-          gif: {}
+          gif: {},
+          searchingText: ''
       }
   },
 
