@@ -1,6 +1,42 @@
 var GIPHY_API_URL = 'https://api.giphy.com';
 var GIPHY_PUB_KEY = 'q1MLo0EO8pEkbEeimt8RaXsAHuttdlnt';
 
+function searchGifPromisified(searchingText) {
+    return new Promise (
+        function(resolve, reject) {
+            var url = GIPHY_API_URL + '/v1/gifs/random?api_key=' + GIPHY_PUB_KEY + '&tag=' + searchingText;  // 2.
+            var xhr = new XMLHttpRequest(); // 3
+            xhr.open('GET', url);
+            xhr.onload = function() {
+                if (this.status === 200) {
+                    resolve(this.response); // Sukces
+                } else {
+                    reject(new Error(this.statusText)); // Dostaliśmy odpowiedź, ale jest to np 404
+                }
+            };
+            xhr.send();
+        }
+    )
+};
+
+
+ /*   function(searchingText, callback) { // 1 
+        var url = GIPHY_API_URL + '/v1/gifs/random?api_key=' + GIPHY_PUB_KEY + '&tag=' + searchingText;  // 2.
+        var xhr = new XMLHttpRequest(); // 3
+        xhr.open('GET', url);
+        xhr.onload = function() {
+            if (xhr.status === 200) { // 4
+            var data = JSON.parse(xhr.responseText).data; // 5
+            var gif = {
+                    url: data.fixed_width_downsampled_url,
+                    sourceUrl: data.url
+                }; // 6
+                callback(gif); // 7
+            }
+        };
+        xhr.send();
+};*/
+
 
 App = React.createClass({
 
@@ -19,23 +55,11 @@ App = React.createClass({
     6. make gif out of data
     7. push object to callback function in props
     */
-    getGif: function(searchingText, callback) { // 1 
-        var url = GIPHY_API_URL + '/v1/gifs/random?api_key=' + GIPHY_PUB_KEY + '&tag=' + searchingText;  // 2.
-        var xhr = new XMLHttpRequest(); // 3
-        xhr.open('GET', url);
-        xhr.onload = function() {
-            if (xhr.status === 200) { // 4
-               var data = JSON.parse(xhr.responseText).data; // 5
-               var gif = {
-                    url: data.fixed_width_downsampled_url,
-                    sourceUrl: data.url
-                }; // 6
-                callback(gif); // 7
-            }
-        };
-        xhr.send();
+    getGif: function() {
+        searchGifPromisified(searchingText)
+            .then(response => console.log('Contents: ' + response))
+            .catch(error => console.error('Something went wrong', error));
     },
-
 
     /* 
     method for return Search
