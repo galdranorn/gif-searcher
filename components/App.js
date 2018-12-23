@@ -34,7 +34,7 @@ App = React.createClass({
             searchingText: ''
         };
       },
-      
+
     getGif: function(searchingText) {
         return searchGifPromisified(searchingText)
     },
@@ -54,13 +54,13 @@ App = React.createClass({
         this.setState({
           loading: true  // 2
         }); 
-        this.getGif(searchingText).then((gif) => {
+        this.getGif((searchingText).then((gif) => {
             this.setState ({  // 4
                 loading: false, // a
                 gif: gif, // b
                 searchingText: searchingText // c
             });
-        }.bind(this)); // 5
+        }).bind(this)); // 5
     },
 
     render: function() {    
