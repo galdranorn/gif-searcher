@@ -10,34 +10,20 @@ function searchGifPromisified(searchingText) {
             xhr.open('GET', url);
             xhr.onload = function() {
                 if (this.status === 200) {
-                    resolve(this.response); // Sukces
+                    var data = JSON.parse(xhr.responseText).data; // 5
+                    var gif = {
+                        url: data.fixed_width_downsampled_url,
+                        sourceUrl: data.url
+                    }
+                    resolve(gif);
                 } else {
-                    reject(new Error(this.statusText)); // Dostaliśmy odpowiedź, ale jest to np 404
+                    reject(new Error(this.statusText));
                 }
             };
             xhr.send();
         }
     )
 };
-
-
- /*   function(searchingText, callback) { // 1 
-        var url = GIPHY_API_URL + '/v1/gifs/random?api_key=' + GIPHY_PUB_KEY + '&tag=' + searchingText;  // 2.
-        var xhr = new XMLHttpRequest(); // 3
-        xhr.open('GET', url);
-        xhr.onload = function() {
-            if (xhr.status === 200) { // 4
-            var data = JSON.parse(xhr.responseText).data; // 5
-            var gif = {
-                    url: data.fixed_width_downsampled_url,
-                    sourceUrl: data.url
-                }; // 6
-                callback(gif); // 7
-            }
-        };
-        xhr.send();
-};*/
-
 
 App = React.createClass({
 
@@ -48,19 +34,9 @@ App = React.createClass({
             searchingText: ''
         };
       },
-    /* 
-    1. as props we got text and function
-    2. construct url for giphy API
-    3. xhr - ask server
-    4. and if response is OK
-    5. pack response.data to var data
-    6. make gif out of data
-    7. push object to callback function in props
-    */
-    getGif: function(searchingText, callback) {
-        searchGifPromisified(searchingText)
-            .then(response => console.log('Contents: ' + response))
-            .catch(error => console.error('Something went wrong', error));
+      
+    getGif: function(searchingText) {
+        return searchGifPromisified(searchingText)
     },
 
     /* 
@@ -78,12 +54,12 @@ App = React.createClass({
         this.setState({
           loading: true  // 2
         }); 
-        this.getGif(searchingText, function(gif) { // 3
-            this.setState({  // 4
+        this.getGif(searchingText).then((gif) => {
+            this.setState ({  // 4
                 loading: false, // a
                 gif: gif, // b
                 searchingText: searchingText // c
-          });
+            });
         }.bind(this)); // 5
     },
 
