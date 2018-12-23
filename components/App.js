@@ -1,6 +1,7 @@
 var GIPHY_API_URL = 'https://api.giphy.com';
 var GIPHY_PUB_KEY = 'q1MLo0EO8pEkbEeimt8RaXsAHuttdlnt';
 
+
 function searchGifPromisified(searchingText) {
     return new Promise (
         function(resolve, reject) {
@@ -44,7 +45,8 @@ App = React.createClass({
         return {
             loading: false, 
             gif: {}, 
-            searchingText: ''};
+            searchingText: ''
+        };
       },
     /* 
     1. as props we got text and function
@@ -55,7 +57,7 @@ App = React.createClass({
     6. make gif out of data
     7. push object to callback function in props
     */
-    getGif: function() {
+    getGif: function(searchingText, callback) {
         searchGifPromisified(searchingText)
             .then(response => console.log('Contents: ' + response))
             .catch(error => console.error('Something went wrong', error));
