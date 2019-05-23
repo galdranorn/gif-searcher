@@ -32,10 +32,10 @@ Search = React.createClass({
     
         // input is not html but react class
         return (
-            <input type={'text'}
+            <input className="app-input" type={'text'}
                 // if change, do some actions defined in handleChange
                 onChange={this.handleChange}
-                placeholder={'Write here what do you want to search'}
+                placeholder={'ex. cat'}
                 style={styles}
                 value={this.state.searchTerm}
                 // listener for finish pressing key
